@@ -9,11 +9,17 @@ import project.formbuilderbackend.dtos.UserDto;
 import project.formbuilderbackend.entities.User;
 import project.formbuilderbackend.repositories.UserRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+
+    public List<UserDto> findAll() {
+        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+    }
 
     public UserDto findById(Long id) {
         User user = userRepository.findById(id).orElseThrow(

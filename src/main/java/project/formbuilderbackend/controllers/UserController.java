@@ -9,11 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 import project.formbuilderbackend.dtos.UserDto;
 import project.formbuilderbackend.services.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    @GetMapping("")
+    public ResponseEntity<List<UserDto>> getUsers() {
+        return ResponseEntity.ok(userService.findAll());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
