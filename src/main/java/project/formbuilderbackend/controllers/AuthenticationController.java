@@ -17,7 +17,7 @@ import project.formbuilderbackend.dtos.JwtRequestUser;
 import project.formbuilderbackend.services.JwtTokenUtil;
 
 @RestController
-@RequestMapping("/authentications")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final JwtTokenUtil jwtTokenUtil;

@@ -30,8 +30,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/authentications/login").permitAll()
-                        .requestMatchers("/authentications/validate-token").hasAuthority("ADMIN")
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/users").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults());
