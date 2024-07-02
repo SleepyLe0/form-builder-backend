@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import project.formbuilderbackend.dtos.UserDto;
-import project.formbuilderbackend.entities.User;
+import project.formbuilderbackend.entities.UserEntity;
 import project.formbuilderbackend.repositories.UserRepository;
 
 import java.util.List;
@@ -18,13 +18,13 @@ public class UserService {
     private final ModelMapper modelMapper;
 
     public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+        return userRepository.findAll().stream().map(userEntity -> modelMapper.map(userEntity, UserDto.class)).toList();
     }
 
     public UserDto findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
         );
-        return modelMapper.map(user, UserDto.class);
+        return modelMapper.map(userEntity, UserDto.class);
     }
 }

@@ -2,17 +2,16 @@ package project.formbuilderbackend.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import project.formbuilderbackend.entities.AuthUser;
-import project.formbuilderbackend.entities.User;
+import project.formbuilderbackend.entities.UserEntity;
 import project.formbuilderbackend.repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,17 +20,16 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(
+        UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
         );
-        List<GrantedAuthority> roles = new ArrayList<>();
-        GrantedAuthority grantedAuthority = new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return user.getRole();
-            }
-        };
-        roles.add(grantedAuthority);
-        return new AuthUser(user.getUsername(), user.getPassword(), roles);
+        return new User(
+                userEntity.getUsername(),
+                userEntity.getPassword(),
+                userEntity.getRoles()
+                        .stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getRole()))
+                        .collect(Collectors.toList())
+        );
     }
 }

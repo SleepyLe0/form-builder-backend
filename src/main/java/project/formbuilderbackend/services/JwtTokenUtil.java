@@ -10,16 +10,29 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
-    @Value("#{${jwt.max-token-interval-hour}*60*60*1000}")
-    private long JWT_TOKEN_VALIDITY;
+    @Value("#{${jwt.max-access-token-interval-hour}*60*60*1000}")
+    private long JWT_ACCESS_TOKEN_EXP;
+    @Value("#{${jwt.max-refresh-token-interval-day}*24*60*60*1000L}")
+    private long JWT_REFRESH_TOKEN_EXP;
     SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+    public String generateAccessToken(UserDetails userDetails) {
+        return doGenerateToken(Map.of(), userDetails, "ACCESS");
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return doGenerateToken(Map.of(), userDetails, "REFRESH");
+    }
+
+    public String getTypeFromToken(String token) {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getHeader().getType();
+    }
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -42,21 +55,32 @@ public class JwtTokenUtil implements Serializable {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
-    public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("info#1", "claim-objec 1");
-        claims.put("info#2", "claim-objec 2");
-        claims.put("info#3", "claim-objec 3");
-        return doGenerateToken(claims, userDetails.getUsername());
-    }
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setHeaderParam("typ", "JWT").setClaims(claims).setSubject(subject)
+
+    private String doGenerateToken(Map<String, Object> claims, UserDetails userDetails, String tokenType) {
+        long expiration = switch (tokenType) {
+            case "ACCESS" -> JWT_ACCESS_TOKEN_EXP;
+            case "REFRESH" -> JWT_REFRESH_TOKEN_EXP;
+            default -> throw new IllegalArgumentException("Invalid token type");
+        };
+        return Jwts.builder()
+                .setHeaderParam("typ", tokenType)
+                .setClaims(claims)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
-                .signWith(signatureAlgorithm, SECRET_KEY).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(signatureAlgorithm, SECRET_KEY)
+                .compact();
     }
-    public Boolean validateToken(String token, UserDetails userDetails) {
+
+    public Boolean validateRefreshToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        String tokenType = getTypeFromToken(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && tokenType.equals("REFRESH"));
+    }
+
+    public Boolean validateAccessToken(String token, UserDetails userDetails) {
+        final String username = getUsernameFromToken(token);
+        String tokenType = getTypeFromToken(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && tokenType.equals("ACCESS"));
     }
 }
