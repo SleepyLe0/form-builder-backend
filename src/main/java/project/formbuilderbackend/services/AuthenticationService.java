@@ -32,8 +32,11 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
 
     public JwtResponseUser login(JwtRequestUser jwtRequestUser) {
+        UserEntity user = userRepository.findByUsernameOrEmail(jwtRequestUser.getUsername(), jwtRequestUser.getUsername()).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(jwtRequestUser.getUsername(), jwtRequestUser.getPassword());
+                new UsernamePasswordAuthenticationToken(user.getUsername(), jwtRequestUser.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         if (!authentication.isAuthenticated()) {
             throw new UsernameNotFoundException("Invalid username or password");
@@ -43,11 +46,12 @@ public class AuthenticationService {
     }
 
     public JwtResponseUser register(RegisterUser registerUser) {
-        if (userRepository.existsByUsername(registerUser.getUsername())) {
+        if (userRepository.existsByUsername(registerUser.getUsername()) || userRepository.existsByEmail(registerUser.getEmail())) {
             throw new RuntimeException("User already exists");
         }
         Role role = roleRepository.findByRole("USER").orElseThrow(() -> new RuntimeException("Role not found"));
         UserEntity user = UserEntity.builder()
+                .email(registerUser.getEmail())
                 .username(registerUser.getUsername())
                 .password(passwordEncoder.encode(registerUser.getPassword()))
                 .roles(List.of(role))
