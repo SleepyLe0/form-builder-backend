@@ -7,24 +7,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.formbuilderbackend.dtos.UserDto;
-import project.formbuilderbackend.services.UserService;
+import project.formbuilderbackend.dtos.FormDto;
+import project.formbuilderbackend.services.FormService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/forms")
 @RequiredArgsConstructor
-public class UserController {
-    private final UserService userService;
+public class FormController {
+    private final FormService formService;
 
     @GetMapping("")
-    public ResponseEntity<UserDto> getUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(userService.findCurrentUser(userDetails.getUsername()));
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getUsers() {
-        return ResponseEntity.ok(userService.findAll());
+    public ResponseEntity<List<FormDto>> getForms(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(formService.findAllByCurrentUser(userDetails.getUsername()));
     }
 }

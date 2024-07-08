@@ -10,11 +10,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class UserDto {
-    Long id;
-    String username;
+    private Long id;
+    private String email;
+    private String username;
     @JsonIgnore
-    List<Role> roles;
-    List<String> roleNames;
+    private List<Role> roles;
+    private List<String> roleNames;
 
     public List<String> getRoleNames() {
         return roles.stream().map(Role::getRole).toList();

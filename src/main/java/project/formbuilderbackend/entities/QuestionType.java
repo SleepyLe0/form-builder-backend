@@ -6,12 +6,12 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "question_types")
+public class QuestionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id", nullable = false)
+    @Column(name = "question_type_id", nullable = false)
     private Long id;
-    @Column(name = "role_name", nullable = false, length = 20)
-    private String role;
+    @Column(name = "type_name", nullable = false)
+    private String type;
 }

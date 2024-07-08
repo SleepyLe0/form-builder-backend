@@ -36,7 +36,7 @@ public class WebSecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/users").hasAuthority("ADMIN")
+                        .requestMatchers("/api/users/all").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
