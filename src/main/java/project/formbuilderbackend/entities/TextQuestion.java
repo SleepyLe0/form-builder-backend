@@ -8,4 +8,8 @@ import lombok.*;
 @Entity
 @Table(name = "text_questions")
 public class TextQuestion extends Question {
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "question_id")
+    private Question question;
 }

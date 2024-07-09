@@ -6,10 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import project.formbuilderbackend.dtos.FormDto;
-import project.formbuilderbackend.entities.Form;
 import project.formbuilderbackend.entities.UserEntity;
-import project.formbuilderbackend.repositories.FormRepository;
-import project.formbuilderbackend.repositories.UserRepository;
+import project.formbuilderbackend.repositories.*;
 
 import java.util.List;
 

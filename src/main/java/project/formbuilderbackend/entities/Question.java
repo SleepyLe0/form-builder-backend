@@ -1,7 +1,5 @@
 package project.formbuilderbackend.entities;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,11 +8,6 @@ import lombok.*;
 @Entity
 @Table(name = "questions")
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "questionType")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = TextQuestion.class, name = "text"),
-        @JsonSubTypes.Type(value = MultipleChoiceQuestion.class, name = "multiple_choice"),
-})
 public abstract class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +23,8 @@ public abstract class Question {
     @ManyToOne
     @JoinColumn(name = "question_type_id", nullable = false)
     private QuestionType questionType;
+    @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
+    private TextQuestion textQuestion;
+    @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
+    private MultipleChoiceQuestion multipleChoiceQuestion;
 }

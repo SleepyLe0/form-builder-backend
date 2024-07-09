@@ -19,4 +19,8 @@ public class MultipleChoiceQuestion extends Question {
     private Integer chooseLimit;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Choice> choices;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "question_id")
+    private Question question;
 }

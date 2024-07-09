@@ -27,6 +27,6 @@ public class Form {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
-//    @OneToMany(mappedBy = "form", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Question> questions;
+    @OneToMany(mappedBy = "form", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions;
 }
