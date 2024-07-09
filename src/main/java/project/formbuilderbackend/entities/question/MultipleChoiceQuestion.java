@@ -1,4 +1,4 @@
-package project.formbuilderbackend.entities;
+package project.formbuilderbackend.entities.question;
 
 import jakarta.persistence.*;
 import lombok.*;

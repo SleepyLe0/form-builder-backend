@@ -1,7 +1,9 @@
-package project.formbuilderbackend.entities;
+package project.formbuilderbackend.entities.form;
 
 import jakarta.persistence.*;
 import lombok.*;
+import project.formbuilderbackend.entities.question.Question;
+import project.formbuilderbackend.entities.user.UserEntity;
 
 import java.time.ZonedDateTime;
 import java.util.List;

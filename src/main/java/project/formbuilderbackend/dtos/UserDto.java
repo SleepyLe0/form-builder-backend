@@ -3,7 +3,7 @@ package project.formbuilderbackend.dtos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import project.formbuilderbackend.entities.Role;
+import project.formbuilderbackend.entities.user.Role;
 
 import java.util.List;
 

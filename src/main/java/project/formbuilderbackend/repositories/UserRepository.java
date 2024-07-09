@@ -1,7 +1,7 @@
 package project.formbuilderbackend.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import project.formbuilderbackend.entities.UserEntity;
+import project.formbuilderbackend.entities.user.UserEntity;
 
 import java.util.Optional;
 

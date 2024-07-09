@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import project.formbuilderbackend.dtos.JwtRequestUser;
 import project.formbuilderbackend.dtos.JwtResponseUser;
 import project.formbuilderbackend.dtos.RegisterUser;
-import project.formbuilderbackend.entities.Role;
-import project.formbuilderbackend.entities.UserEntity;
+import project.formbuilderbackend.entities.user.Role;
+import project.formbuilderbackend.entities.user.UserEntity;
 import project.formbuilderbackend.repositories.RoleRepository;
 import project.formbuilderbackend.repositories.UserRepository;
 

@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import project.formbuilderbackend.entities.UserEntity;
+import project.formbuilderbackend.entities.user.UserEntity;
 import project.formbuilderbackend.repositories.UserRepository;
 
 import java.util.stream.Collectors;

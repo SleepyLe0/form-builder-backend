@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import project.formbuilderbackend.entities.*;
+import project.formbuilderbackend.entities.question.*;
 
 import java.util.List;
 

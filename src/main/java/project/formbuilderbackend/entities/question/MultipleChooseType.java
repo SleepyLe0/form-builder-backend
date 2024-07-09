@@ -1,4 +1,4 @@
-package project.formbuilderbackend.entities;
+package project.formbuilderbackend.entities.question;
 
 public enum MultipleChooseType {
     NO_LIMIT,

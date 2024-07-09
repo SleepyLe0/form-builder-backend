@@ -1,7 +1,8 @@
-package project.formbuilderbackend.entities;
+package project.formbuilderbackend.entities.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import project.formbuilderbackend.entities.form.Form;
 
 import java.util.List;
 
