@@ -7,6 +7,9 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "text_questions")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TextQuestion extends Question {
     @OneToOne
     @MapsId

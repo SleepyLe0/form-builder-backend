@@ -8,10 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfig {
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-//        modelMapper.createTypeMap(Question.class, QuestionDto.class)
-//                .include(TextQuestion.class, TextQuestionDto.class)
-//                .include(MultipleChoiceQuestion.class, MultipleChoiceQuestionDto.class);
-        return modelMapper;
+        return new ModelMapper();
     }
 }

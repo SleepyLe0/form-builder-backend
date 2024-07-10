@@ -1,4 +1,4 @@
-package project.formbuilderbackend.dtos;
+package project.formbuilderbackend.dtos.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

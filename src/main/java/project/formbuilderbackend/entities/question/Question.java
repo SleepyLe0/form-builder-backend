@@ -9,6 +9,8 @@ import project.formbuilderbackend.entities.form.Form;
 @Entity
 @Table(name = "questions")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

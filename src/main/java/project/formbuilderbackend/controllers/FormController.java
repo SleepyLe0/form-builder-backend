@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import project.formbuilderbackend.dtos.FormDto;
+import org.springframework.web.bind.annotation.*;
+import project.formbuilderbackend.dtos.question.QuestionDto;
+import project.formbuilderbackend.dtos.form.FormDto;
+import project.formbuilderbackend.dtos.form.FormListDto;
+import project.formbuilderbackend.dtos.form.FormRequestDto;
+import project.formbuilderbackend.dtos.question.QuestionRequestDto;
 import project.formbuilderbackend.services.FormService;
 
 import java.util.List;
@@ -19,7 +21,33 @@ public class FormController {
     private final FormService formService;
 
     @GetMapping("")
-    public ResponseEntity<List<FormDto>> getForms(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<FormListDto>> getForms(@AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(formService.findAllByCurrentUser(userDetails.getUsername()));
+    }
+
+    @GetMapping("/{formId}")
+    public ResponseEntity<FormDto> getFormById(@PathVariable Long formId, @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(formService.findById(formId, userDetails.getUsername()));
+    }
+
+    @PostMapping("")
+    public ResponseEntity<FormDto> addForm(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(formService.createForm(userDetails.getUsername()));
+    }
+
+    @PutMapping("/detail/{formId}")
+    public ResponseEntity<FormDto> editFormDetails(@PathVariable Long formId, @RequestBody FormRequestDto form, @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(formService.updateFormDetails(formId, form, userDetails.getUsername()));
+    }
+
+    @PutMapping("/question/{formId}")
+    public ResponseEntity<FormDto> editFormQuestions(@PathVariable Long formId, @RequestBody List<QuestionRequestDto> questions, @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(formService.updateFormQuestions(formId, questions, userDetails.getUsername()));
+    }
+
+    @DeleteMapping("/{formId}")
+    public ResponseEntity<String> deleteForm(@PathVariable Long formId, @AuthenticationPrincipal UserDetails userDetails) {
+        formService.deleteForm(formId, userDetails.getUsername());
+        return ResponseEntity.ok("Form deleted successfully");
     }
 }

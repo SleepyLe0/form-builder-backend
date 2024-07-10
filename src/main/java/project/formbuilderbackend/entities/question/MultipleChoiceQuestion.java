@@ -9,6 +9,9 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "multiple_choice_questions")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MultipleChoiceQuestion extends Question {
     @Column(name = "multiple_answers", nullable = false)
     private Boolean multipleAnswers;

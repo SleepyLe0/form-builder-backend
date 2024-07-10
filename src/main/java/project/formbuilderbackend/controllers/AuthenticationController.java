@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.formbuilderbackend.dtos.JwtRequestUser;
-import project.formbuilderbackend.dtos.JwtResponseUser;
-import project.formbuilderbackend.dtos.RegisterUser;
+import project.formbuilderbackend.dtos.user.JwtRequestUser;
+import project.formbuilderbackend.dtos.user.JwtResponseUser;
+import project.formbuilderbackend.dtos.user.RegisterUser;
 import project.formbuilderbackend.services.AuthenticationService;
 
 @RestController

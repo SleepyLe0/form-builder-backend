@@ -1,4 +1,4 @@
-package project.formbuilderbackend.dtos;
+package project.formbuilderbackend.dtos.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

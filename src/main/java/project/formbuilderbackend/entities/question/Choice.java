@@ -7,6 +7,9 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "choices")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Choice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

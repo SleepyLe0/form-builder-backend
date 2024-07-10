@@ -1,4 +1,4 @@
-package project.formbuilderbackend.dtos;
+package project.formbuilderbackend.dtos.question;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

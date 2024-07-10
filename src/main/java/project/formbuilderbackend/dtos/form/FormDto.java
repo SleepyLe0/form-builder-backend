@@ -1,7 +1,8 @@
-package project.formbuilderbackend.dtos;
+package project.formbuilderbackend.dtos.form;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import project.formbuilderbackend.dtos.question.QuestionDto;
 import project.formbuilderbackend.entities.form.FormStatus;
 
 import java.time.ZonedDateTime;
