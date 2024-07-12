@@ -63,6 +63,12 @@ public class QuestionService {
         Question question = questionRepository.findById(questionId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found")
         );
+        if (!question.getForm().getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this question");
+        }
+        if (!questionDto.getId().equals(questionId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Question id does not match");
+        }
         question.setLabel(questionDto.getLabel());
         question.setRequired(questionDto.getRequired());
         switch (question.getQuestionType().getType()) {
