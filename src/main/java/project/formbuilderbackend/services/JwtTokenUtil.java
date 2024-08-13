@@ -16,7 +16,7 @@ import java.util.Map;
 public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
-    @Value("#{${jwt.max-access-token-interval-hour}*60*60*1000}")
+    @Value("#{${jwt.max-access-token-interval-min}*60*1000}")
     private long JWT_ACCESS_TOKEN_EXP;
     @Value("#{${jwt.max-refresh-token-interval-day}*24*60*60*1000L}")
     private long JWT_REFRESH_TOKEN_EXP;
