@@ -61,6 +61,9 @@ public class FormService {
         Form form = formRepository.findByIdAndUser(formId, user).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Form not found")
         );
+        if (!newForm.getId().equals(formId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Form ID does not match");
+        }
         form.setTitle(newForm.getTitle());
         form.setDescription(newForm.getDescription());
         form.setStatus(newForm.getStatus());
